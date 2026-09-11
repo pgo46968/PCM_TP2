@@ -7,38 +7,40 @@ let game = null; // Stores the current instance of the game
  * @param {Object} obj - The object to be debugged.
  */
 function debug(obj) {
-  document.getElementById("debug").innerHTML = JSON.stringify(obj); // Displays the state of the object as JSON
+  document.getElementById("debug").innerHTML = JSON.stringify(obj);
 }
 
 /**
  * Initializes the game buttons.
  */
 function buttonsInitialization() {
-  document.getElementById("card").disabled = false; // Enables the button to draw a card
-  document.getElementById("stand").disabled = false; // Enables the button to stand
-  document.getElementById("new_game").disabled = true; // Disables the button for a new game
+  document.getElementById("card").disabled = false;
+  document.getElementById("stand").disabled = false;
+  document.getElementById("new_game").disabled = true;
 }
 
 /**
  * Finalizes the buttons after the game ends.
  */
 function finalizeButtons() {
-  //TODO: Reveal the dealer's hidden card if you hid it like you were supposed to.
+  // Reveal the dealer's hidden card
   if (game) {
     let dealerDiv = document.getElementById("dealer");
     let dCards = game.getDealerCards();
-    if (dealerDiv && dealerDiv.children[1]) {
-      // Substitui o placeholder da 2ª carta pela carta real
+
+    if (dealerDiv && dealerDiv.children[1] && dCards[1]) {
       printCard(dealerDiv.children[1], dCards[1], true);
     }
   }
 
-  document.getElementById("card").disabled = true; // Disables the button to draw a card
-  document.getElementById("stand").disabled = true; // Disables the button to stand
-  document.getElementById("new_game").disabled = false; // Enables the button for a new game
+  // Disable game buttons
+  document.getElementById("card").disabled = true;
+  document.getElementById("stand").disabled = true;
+
+  // Enable new game button
+  document.getElementById("new_game").disabled = false;
 }
 
-//TODO: Implement this method.
 /**
  * Clears the page to start a new game.
  */
@@ -46,23 +48,54 @@ function clearPage() {
   document.getElementById("dealer").innerHTML = "";
   document.getElementById("player").innerHTML = "";
 
-  // Assumindo que tens uma div para mostrar o resultado final
   let resultDiv = document.getElementById("game_status");
-  if (resultDiv) resultDiv.innerHTML = "";
+
+  if (resultDiv) {
+    resultDiv.innerHTML = "";
+  }
 }
 
-//TODO: Complete this method.
+/**
+ * Displays the final result of the game.
+ * @param {Object} state - Current game state.
+ */
+function finalScore(state) {
+  let resultDiv = document.getElementById("game_status");
+
+  if (!resultDiv) {
+    return;
+  }
+
+  if (state.playerBusted) {
+    resultDiv.innerHTML = "O Jogador rebentou! O Dealer vence.";
+  } else if (state.dealerBusted) {
+    resultDiv.innerHTML = "O Dealer rebentou! O Jogador vence!";
+  } else if (state.playerWon) {
+    resultDiv.innerHTML = "O Jogador vence!";
+  } else if (state.dealerWon) {
+    resultDiv.innerHTML = "O Dealer vence!";
+  } else {
+    resultDiv.innerHTML = "Empate!";
+  }
+}
+
 /**
  * Starts a new game of Blackjack.
  */
 function newGame() {
   clearPage();
-  game = new Blackjack(); // Creates a new instance of the Blackjack game
-  buttonsInitialization(); // Prepara os botões para jogar
 
-  // Distribui as duas cartas iniciais para o jogador e para o dealer
+  // Create a new Blackjack object
+  game = new Blackjack();
+
+  // Initialize buttons
+  buttonsInitialization();
+
+  // Deal two cards to the player
   game.playerMove();
   game.playerMove();
+
+  // Deal two cards to the dealer
   game.dealerMove();
   game.dealerMove();
 
@@ -72,141 +105,148 @@ function newGame() {
   let pCards = game.getPlayerCards();
   let dCards = game.getDealerCards();
 
-  // Imprime as cartas do jogador
+  // Display player's two cards
   printCard(playerDiv, pCards[0]);
   printCard(playerDiv, pCards[1]);
 
-  // Imprime a 1ª carta do dealer e esconde a 2ª
+  // Display dealer's first card
   printCard(dealerDiv, dCards[0]);
 
-  // Cria um elemento placeholder para a carta escondida
+  // Create hidden card for dealer's second card
   let hiddenCardDiv = document.createElement("div");
+
   hiddenCardDiv.className = "card hidden-card";
-  hiddenCardDiv.innerHTML = "🂠"; // Símbolo de costas de carta
+  hiddenCardDiv.innerHTML = "🂠";
+
   dealerDiv.appendChild(hiddenCardDiv);
 
-  debug(game); // Displays the current state of the game for debugging
+  // Debug
+  debug(game);
 
-  // Verifica se houve blackjack imediato (ex: 21 ou 25 pontos log de início)
+  // Check initial game state
   updatePlayer(game.getGameState());
 }
 
-  function finalScore(state) {
-    let resultDiv = document.getElementById("game_status");
-    if (!resultDiv) return;
+/**
+ * Updates the player's state in the game.
+ * @param {Object} state - The current game state.
+ */
+function updatePlayer(state) {
+  if (state.gameEnded) {
+    finalizeButtons();
+    finalScore(state);
+  }
+}
 
-    if (state.playerBusted) {
-      resultDiv.innerHTML = "O Jogador rebentou! O Dealer vence.";
-    } else if (state.dealerBusted) {
-      resultDiv.innerHTML = "O Dealer rebentou! O Jogador vence!";
-    } else if (state.playerWon) {
-      resultDiv.innerHTML = "O Jogador vence!";
-    } else if (state.dealerWon) {
-      resultDiv.innerHTML = "O Dealer vence!";
-    } else {
-      resultDiv.innerHTML = "Empate!";
-    }
-  } 
+/**
+ * Updates the dealer's state in the game.
+ * @param {Object} state - The current game state.
+ */
+function updateDealer(state) {
+  if (state.gameEnded) {
+    finalizeButtons();
+    finalScore(state);
+  }
+}
 
-  //TODO: Implement this method.
-  /**
-   * Updates the dealer's state in the game.
-   * @param {Object} state - The current state of the game.
-   */
-  function updateDealer(state) {
-    if (state.gameEnded) {
-      finalizeButtons();
-      finalScore(state);
-    }
+/**
+ * Causes the player to draw a new card.
+ */
+function playerNewCard() {
+  // Ask the Blackjack object for a new card
+  let state = game.playerMove();
+
+  // Get player's cards
+  let pCards = game.getPlayerCards();
+
+  // Get the last card
+  let lastCard = pCards[pCards.length - 1];
+
+  // Display the new card
+  printCard(document.getElementById("player"), lastCard);
+
+  // Update game state
+  updatePlayer(state);
+
+  // Debug
+  debug(game);
+}
+
+/**
+ * Causes the dealer to draw a new card.
+ */
+function dealerNewCard() {
+  // Ask the Blackjack object for a new card
+  let state = game.dealerMove();
+
+  // Get dealer's cards
+  let dCards = game.getDealerCards();
+
+  // Get the last card
+  let lastCard = dCards[dCards.length - 1];
+
+  // Display the new card
+  printCard(document.getElementById("dealer"), lastCard);
+
+  // Update game state
+  updateDealer(state);
+
+  // Debug
+  debug(game);
+
+  return state;
+}
+
+/**
+ * Finishes the dealer's turn.
+ */
+function dealerFinish() {
+  // Change to dealer's turn
+  game.setDealerTurn(true);
+
+  // Get current state
+  let state = game.getGameState();
+
+  // Get dealer elements and cards
+  let dealerDiv = document.getElementById("dealer");
+  let dCards = game.getDealerCards();
+
+  // Reveal the hidden second card
+  if (dealerDiv && dealerDiv.children[1] && dCards[1]) {
+    printCard(dealerDiv.children[1], dCards[1], true);
   }
 
-  //TODO: Implement this method.
-  /**
-   * Updates the player's state in the game.
-   * @param {Object} state - The current state of the game.
-   */
-  function updatePlayer(state) {
-    if (state.gameEnded) {
-      finalizeButtons();
-      finalScore(state);
-    }
+  // Dealer draws cards until game ends
+  while (!state.gameEnded) {
+    state = dealerNewCard();
+  }
+}
+
+/**
+ * Prints a card in the graphical interface.
+ *
+ * @param {HTMLElement} element - Element where the card will be displayed.
+ * @param {Object} card - Card to be displayed.
+ * @param {boolean} replace - Indicates whether to replace an existing card.
+ */
+function printCard(element, card, replace = false) {
+  if (!element || !card) {
+    return;
   }
 
-  //TODO: Implement this method.
-  /**
-   * Causes the dealer to draw a new card.
-   * @returns {Object} - The game state after the dealer's move.
-   */
-  function dealerNewCard() {
-    let state = game.dealerMove();
-    let dCards = game.getDealerCards();
+  const cardText = `${card.rank}${card.suit}`;
 
-    // Imprime apenas a última carta adicionada
-    printCard(document.getElementById("dealer"), dCards[dCards.length - 1]);
+  if (replace) {
+    // Replace hidden card
+    element.innerHTML = cardText;
+    element.className = "card";
+  } else {
+    // Create a new card
+    let cardDiv = document.createElement("div");
 
-    updateDealer(state);
-    debug(game);
-    return state;
-  }
+    cardDiv.className = "card";
+    cardDiv.innerHTML = cardText;
 
-  //TODO: Implement this method.
-  /**
-   * Causes the player to draw a new card.
-   * @returns {Object} - The game state after the player's move.
-   */
-  function playerNewCard() {
-    let state = game.playerMove();
-    let pCards = game.getPlayerCards();
-
-    printCard(document.getElementById("player"), pCards[pCards.length - 1]);
-
-    updatePlayer(state);
-    debug(game);
-  }
-
-  //TODO: Implement this method.
-  /**
-   * Finishes the dealer's turn.
-   */
-  function dealerFinish() {
-    game.setDealerTurn(true);
-    let state = game.getGameState(); // Reavalia o estado agora que é o turno do dealer
-
-    // Revela a carta escondida primeiro (caso não tenha sido revelada)
-    let dealerDiv = document.getElementById("dealer");
-    let dCards = game.getDealerCards();
-    if (dealerDiv && dealerDiv.children[1]) {
-      printCard(dealerDiv.children[1], dCards[1], true);
-    }
-
-    // O dealer continua a tirar cartas até o jogo terminar pelas regras (busted ou >= pontos mínimos)
-    while (!state.gameEnded) {
-      state = dealerNewCard();
-    }
-
-    // updateDealer() dentro do dealerNewCard já chama o finalizeButtons/finalScore
-  }
-
-  //TODO: Implement this method.
-  /**
-   * Prints the card in the graphical interface.
-   * @param {HTMLElement} element - The element where the card will be displayed.
-   * @param {Card} card - The card to be displayed.
-   * @param {boolean} [replace=false] - Indicates whether to replace the existing image.
-   */
-  function printCard(element, card, replace = false) {
-    if (!element) return;
-
-    const cardText = `${card.rank}${card.suit}`;
-
-    if (replace) {
-      element.innerHTML = cardText;
-      element.className = "card"; // Remove a classe 'hidden-card' se existir
-    } else {
-      let cardDiv = document.createElement("div");
-      cardDiv.className = "card";
-      cardDiv.innerHTML = cardText;
-      element.appendChild(cardDiv);
-    }
+    element.appendChild(cardDiv);
   }
 }
