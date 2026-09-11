@@ -1,0 +1,725 @@
+```css
+/* =========================================================
+   BLACKJACK 25
+   CSS ADAPTADO AO HTML + BLACKJACK_MANAGER.JS
+   ========================================================= */
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   PÁGINA
+   ========================================================= */
+
+body {
+    min-height: 100vh;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(circle at top, #1f2937, #080b10 70%);
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+    text-align: center;
+
+    padding: 25px 10px 15px;
+}
+
+header h1 {
+    font-size: 3rem;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+
+    color: #f5c542;
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 15px rgba(245, 197, 66, 0.25);
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main {
+    flex: 1;
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 15px 20px 30px;
+}
+
+
+/* =========================================================
+   MESA
+   ========================================================= */
+
+#game {
+    position: relative;
+
+    width: 100%;
+    max-width: 950px;
+
+    min-height: 570px;
+
+    padding: 35px 40px;
+
+    text-align: center;
+
+    /*
+       Mesa de casino
+    */
+    background:
+        radial-gradient(
+            ellipse at center,
+            #087f4b 0%,
+            #05633c 55%,
+            #03472c 100%
+        );
+
+    /*
+       Moldura da mesa
+    */
+    border: 12px solid #5a3517;
+
+    border-radius: 35px;
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.7),
+        inset 0 0 35px rgba(0, 0, 0, 0.35);
+}
+
+
+/*
+   Linha interior da mesa
+*/
+
+#game::before {
+    content: "";
+
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+
+    border: 2px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: 25px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   DEALER / PLAYER TÍTULOS
+   ========================================================= */
+
+#game h2 {
+    position: relative;
+    z-index: 2;
+
+    margin: 10px 0 12px;
+
+    font-size: 1.5rem;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    color: white;
+
+    text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+
+/* =========================================================
+   ÁREAS DAS CARTAS
+   ========================================================= */
+
+/*
+   No HTML:
+
+   <p id="dealer"></p>
+   <p id="player"></p>
+
+   O JavaScript coloca DIV.card dentro destes elementos.
+*/
+
+#dealer,
+#player {
+    position: relative;
+    z-index: 2;
+
+    min-height: 145px;
+
+    margin: 0 0 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    /*
+       Retira o comportamento padrão do <p>
+    */
+    padding: 5px;
+}
+
+
+/* =========================================================
+   CARTAS
+   ========================================================= */
+
+.card {
+    width: 90px;
+    height: 125px;
+
+    /*
+       Fundo branco da carta
+    */
+    background: #ffffff;
+
+    color: #111111;
+
+    border: 2px solid #d1d5db;
+
+    border-radius: 10px;
+
+    /*
+       Centralizar o valor da carta
+    */
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    /*
+       Texto da carta
+    */
+    font-size: 2rem;
+
+    font-weight: bold;
+
+    /*
+       Sombra
+    */
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.5);
+
+    /*
+       Animação
+    */
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+    /*
+       Impede que o texto fique selecionável
+    */
+    user-select: none;
+}
+
+
+/*
+   Efeito quando passamos o rato
+*/
+
+.card:hover {
+    transform: translateY(-8px) rotate(-1deg);
+
+    box-shadow:
+        0 12px 20px rgba(0, 0, 0, 0.6);
+}
+
+
+/* =========================================================
+   CARTA ESCONDIDA
+   ========================================================= */
+
+.hidden-card {
+    /*
+       Fundo vermelho/escuro típico de carta de casino
+    */
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #8b1e2d,
+            #8b1e2d 5px,
+            #a52a3b 5px,
+            #a52a3b 10px
+        );
+
+    border: 3px solid white;
+
+    color: white;
+
+    font-size: 3rem;
+
+    /*
+       Dá aparência de verso de carta
+    */
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 4px #8b1e2d,
+        inset 0 0 0 6px white;
+}
+
+
+/*
+   Hover da carta escondida
+*/
+
+.hidden-card:hover {
+    transform: translateY(-8px) rotate(2deg);
+}
+
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+#game button {
+    position: relative;
+    z-index: 3;
+
+    min-width: 135px;
+
+    margin: 8px;
+
+    padding: 13px 25px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 1rem;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+/*
+   Hover geral
+*/
+
+#game button:hover:not(:disabled) {
+    transform: translateY(-3px);
+
+    filter: brightness(1.1);
+
+    box-shadow:
+        0 8px 15px rgba(0, 0, 0, 0.45);
+}
+
+
+/*
+   Click
+*/
+
+#game button:active:not(:disabled) {
+    transform: translateY(1px);
+
+    box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+
+/* =========================================================
+   BOTÃO CARD
+   ========================================================= */
+
+#card {
+    background: #2563eb !important;
+
+    border: 2px solid #60a5fa !important;
+
+    color: white !important;
+}
+
+
+/* =========================================================
+   BOTÃO STAND
+   ========================================================= */
+
+#stand {
+    background: #dc2626 !important;
+
+    border: 2px solid #f87171 !important;
+
+    color: white !important;
+}
+
+
+/* =========================================================
+   BOTÃO NEW GAME
+   ========================================================= */
+
+#new_game {
+    background: #16a34a !important;
+
+    border: 2px solid #4ade80 !important;
+
+    color: white !important;
+}
+
+
+/* =========================================================
+   BOTÕES DESATIVADOS
+   ========================================================= */
+
+#game button:disabled {
+    opacity: 0.35;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+
+    filter: grayscale(0.4);
+}
+
+
+/* =========================================================
+   ÁREA DE STATUS
+   ========================================================= */
+
+/*
+   O HTML usa:
+   #game_status
+
+   O JavaScript deveria usar o mesmo ID.
+*/
+
+#game_status,
+#status_game {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 950px;
+
+    min-height: 65px;
+
+    margin-top: 20px;
+
+    padding: 18px 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1f2937,
+            #111827
+        );
+
+    border: 2px solid #f5c542;
+
+    border-radius: 14px;
+
+    text-align: center;
+
+    font-size: 1.3rem;
+
+    font-weight: bold;
+
+    color: #f5c542;
+
+    box-shadow:
+        0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================================
+   DEBUG
+   ========================================================= */
+
+#sec_debug {
+    width: 100%;
+    max-width: 950px;
+
+    margin-top: 25px;
+
+    padding: 15px 20px;
+
+    background: #020617;
+
+    border: 1px solid #374151;
+
+    border-radius: 10px;
+
+    color: #9ca3af;
+
+    font-family: monospace;
+
+    font-size: 0.8rem;
+
+    box-shadow:
+        0 5px 12px rgba(0, 0, 0, 0.4);
+}
+
+
+#sec_debug h2 {
+    margin-bottom: 8px;
+
+    font-size: 0.9rem;
+
+    color: #6b7280;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+#debug {
+    word-break: break-word;
+
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    width: 100%;
+
+    padding: 15px;
+
+    text-align: center;
+
+    color: #6b7280;
+
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   ANIMAÇÃO DAS CARTAS
+   ========================================================= */
+
+@keyframes dealCard {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-30px)
+            scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/*
+   Cada carta criada pelo JavaScript
+   aparece com animação.
+*/
+
+.card {
+    animation: dealCard 0.35s ease-out;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    header {
+        padding: 20px 10px 10px;
+    }
+
+    header h1 {
+        font-size: 2.3rem;
+
+        letter-spacing: 3px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    #game {
+        min-height: 500px;
+
+        padding: 25px 20px;
+
+        border-width: 8px;
+
+        border-radius: 25px;
+    }
+
+    #game h2 {
+        font-size: 1.3rem;
+    }
+
+    #dealer,
+    #player {
+        min-height: 120px;
+
+        gap: 8px;
+    }
+
+    .card {
+        width: 70px;
+        height: 100px;
+
+        font-size: 1.6rem;
+    }
+
+    .hidden-card {
+        font-size: 2.3rem;
+    }
+
+    #game button {
+        min-width: 115px;
+
+        padding: 11px 18px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - TELEMÓVEL
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    header h1 {
+        font-size: 1.8rem;
+
+        letter-spacing: 2px;
+    }
+
+    #game {
+        min-height: 450px;
+
+        padding: 20px 12px;
+
+        border-width: 5px;
+
+        border-radius: 20px;
+    }
+
+    #game::before {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+
+        border-radius: 15px;
+    }
+
+    #game h2 {
+        font-size: 1.1rem;
+
+        letter-spacing: 2px;
+    }
+
+    #dealer,
+    #player {
+        min-height: 95px;
+
+        gap: 5px;
+
+        margin-bottom: 15px;
+    }
+
+    .card {
+        width: 52px;
+        height: 76px;
+
+        border-radius: 7px;
+
+        font-size: 1.2rem;
+    }
+
+    .hidden-card {
+        font-size: 1.7rem;
+    }
+
+    #game button {
+        width: 90%;
+
+        margin: 5px auto;
+
+        display: block;
+
+        padding: 10px;
+    }
+
+    #game_status,
+    #status_game {
+        font-size: 1rem;
+
+        padding: 15px;
+    }
+
+    #sec_debug {
+        font-size: 0.7rem;
+
+        padding: 10px;
+    }
+}
+```

@@ -91,7 +91,7 @@ function newGame() {
   updatePlayer(game.getGameState());
 
   function finalScore(state) {
-    let resultDiv = document.getElementById("status_game");
+    let resultDiv = document.getElementById("game_status");
     if (!resultDiv) return;
 
     if (state.playerBusted) {
