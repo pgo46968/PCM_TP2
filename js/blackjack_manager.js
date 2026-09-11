@@ -89,6 +89,7 @@ function newGame() {
 
   // Verifica se houve blackjack imediato (ex: 21 ou 25 pontos log de início)
   updatePlayer(game.getGameState());
+}
 
   function finalScore(state) {
     let resultDiv = document.getElementById("game_status");
@@ -105,7 +106,7 @@ function newGame() {
     } else {
       resultDiv.innerHTML = "Empate!";
     }
-  }
+  } 
 
   //TODO: Implement this method.
   /**
