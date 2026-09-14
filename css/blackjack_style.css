@@ -745,3 +745,39 @@ footer {
 .icon-lose {
   color: #dc3545; /* Vermelho para Derrota (Bust/Perdeu) */
 }
+
+/* =========================================================
+   CORREÇÃO PARA ECRÃS PEQUENOS (Tem de ser o último código)
+   ========================================================= */
+@media (max-width: 480px) {
+  /* Empilha as cartas em cima e a pontuação em baixo */
+  .cards-wrapper {
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  /* Permite que as cartas desçam de linha se o jogador tirar muitas */
+  .cards-container {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* Centra perfeitamente a pontuação e os símbolos de vitória/derrota */
+  .stats-container {
+    justify-content: center !important;
+    width: 100% !important;
+    margin-top: 5px !important;
+  }
+
+  /* Reduz os elementos para evitar esticar os limites da mesa */
+  .score-text {
+    font-size: 1.2rem !important;
+  }
+
+  .result-icon {
+    font-size: 1.8rem !important;
+  }
+}
