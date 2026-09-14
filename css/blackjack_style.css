@@ -10,161 +10,151 @@
    ========================================================= */
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
 
 /* =========================================================
    PÁGINA
    ========================================================= */
 
 body {
-    min-height: 100vh;
+  min-height: 100vh;
 
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 
-    background:
-        radial-gradient(circle at top, #1f2937, #080b10 70%);
+  background: radial-gradient(circle at top, #1f2937, #080b10 70%);
 
-    color: white;
+  color: white;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-
 
 /* =========================================================
    HEADER
    ========================================================= */
 
 header {
-    text-align: center;
+  text-align: center;
 
-    padding: 25px 10px 15px;
+  padding: 25px 10px 15px;
 }
 
 header h1 {
-    font-size: 3rem;
+  font-size: 3rem;
 
-    font-weight: 700;
+  font-weight: 700;
 
-    letter-spacing: 4px;
+  letter-spacing: 4px;
 
-    color: #f5c542;
+  color: #f5c542;
 
-    text-transform: uppercase;
+  text-transform: uppercase;
 
-    text-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.8),
-        0 0 15px rgba(245, 197, 66, 0.25);
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 0 15px rgba(245, 197, 66, 0.25);
 }
-
 
 /* =========================================================
    MAIN
    ========================================================= */
 
 main {
-    flex: 1;
+  flex: 1;
 
-    width: 100%;
+  width: 100%;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    padding: 15px 20px 30px;
+  padding: 15px 20px 30px;
 }
-
 
 /* =========================================================
    MESA
    ========================================================= */
 
 #game {
-    position: relative;
+  position: relative;
 
-    width: 100%;
-    max-width: 950px;
+  width: 100%;
+  max-width: 950px;
 
-    min-height: 570px;
+  min-height: 570px;
 
-    padding: 35px 40px;
+  padding: 35px 40px;
 
-    text-align: center;
+  text-align: center;
 
-    /*
+  /*
        Mesa de casino
     */
-    background:
-        radial-gradient(
-            ellipse at center,
-            #087f4b 0%,
-            #05633c 55%,
-            #03472c 100%
-        );
+  background: radial-gradient(
+    ellipse at center,
+    #087f4b 0%,
+    #05633c 55%,
+    #03472c 100%
+  );
 
-    /*
+  /*
        Moldura da mesa
     */
-    border: 12px solid #5a3517;
+  border: 12px solid #5a3517;
 
-    border-radius: 35px;
+  border-radius: 35px;
 
-    box-shadow:
-        0 20px 45px rgba(0, 0, 0, 0.7),
-        inset 0 0 35px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.7),
+    inset 0 0 35px rgba(0, 0, 0, 0.35);
 }
-
 
 /*
    Linha interior da mesa
 */
 
 #game::before {
-    content: "";
+  content: "";
 
-    position: absolute;
+  position: absolute;
 
-    top: 18px;
-    left: 18px;
-    right: 18px;
-    bottom: 18px;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
 
-    border: 2px solid rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.25);
 
-    border-radius: 25px;
+  border-radius: 25px;
 
-    pointer-events: none;
+  pointer-events: none;
 }
-
 
 /* =========================================================
    DEALER / PLAYER TÍTULOS
    ========================================================= */
 
 #game h2 {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 
-    margin: 10px 0 12px;
+  margin: 10px 0 12px;
 
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 
-    font-weight: bold;
+  font-weight: bold;
 
-    text-transform: uppercase;
+  text-transform: uppercase;
 
-    letter-spacing: 3px;
+  letter-spacing: 3px;
 
-    color: white;
+  color: white;
 
-    text-shadow:
-        2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
-
 
 /* =========================================================
    ÁREAS DAS CARTAS
@@ -181,254 +171,237 @@ main {
 
 #dealer,
 #player {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 
-    min-height: 145px;
+  min-height: 145px;
 
-    margin: 0 0 20px;
+  margin: 0 0 20px;
 
-    display: flex;
+  display: flex;
 
-    justify-content: center;
+  justify-content: center;
 
-    align-items: center;
+  align-items: center;
 
-    gap: 12px;
+  gap: 12px;
 
-    /*
+  /*
        Retira o comportamento padrão do <p>
     */
-    padding: 5px;
+  padding: 5px;
 }
-
 
 /* =========================================================
    CARTAS
    ========================================================= */
 
 .card {
-    width: 90px;
-    height: 125px;
+  width: 90px;
+  height: 125px;
 
-    /*
+  /*
        Fundo branco da carta
     */
-    background: #ffffff;
+  background: #ffffff;
 
-    color: #111111;
+  color: #111111;
 
-    border: 2px solid #d1d5db;
+  border: 2px solid #d1d5db;
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    /*
+  /*
        Centralizar o valor da carta
     */
-    display: flex;
+  display: flex;
 
-    justify-content: center;
+  justify-content: center;
 
-    align-items: center;
+  align-items: center;
 
-    /*
+  /*
        Texto da carta
     */
-    font-size: 2rem;
+  font-size: 2rem;
 
-    font-weight: bold;
+  font-weight: bold;
 
-    /*
+  /*
        Sombra
     */
-    box-shadow:
-        0 6px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 
-    /*
+  /*
        Animação
     */
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 
-    /*
+  /*
        Impede que o texto fique selecionável
     */
-    user-select: none;
+  user-select: none;
 }
-
 
 /*
    Efeito quando passamos o rato
 */
 
 .card:hover {
-    transform: translateY(-8px) rotate(-1deg);
+  transform: translateY(-8px) rotate(-1deg);
 
-    box-shadow:
-        0 12px 20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6);
 }
-
 
 /* =========================================================
    CARTA ESCONDIDA
    ========================================================= */
 
 .hidden-card {
-    /*
+  /*
        Fundo vermelho/escuro típico de carta de casino
     */
-    background:
-        repeating-linear-gradient(
-            45deg,
-            #8b1e2d,
-            #8b1e2d 5px,
-            #a52a3b 5px,
-            #a52a3b 10px
-        );
+  background: repeating-linear-gradient(
+    45deg,
+    #8b1e2d,
+    #8b1e2d 5px,
+    #a52a3b 5px,
+    #a52a3b 10px
+  );
 
-    border: 3px solid white;
+  border: 3px solid white;
 
-    color: white;
+  color: white;
 
-    font-size: 3rem;
+  font-size: 3rem;
 
-    /*
+  /*
        Dá aparência de verso de carta
     */
-    box-shadow:
-        0 6px 12px rgba(0, 0, 0, 0.6),
-        inset 0 0 0 4px #8b1e2d,
-        inset 0 0 0 6px white;
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 4px #8b1e2d,
+    inset 0 0 0 6px white;
 }
-
 
 /*
    Hover da carta escondida
 */
 
 .hidden-card:hover {
-    transform: translateY(-8px) rotate(2deg);
+  transform: translateY(-8px) rotate(2deg);
 }
-
 
 /* =========================================================
    BOTÕES
    ========================================================= */
 
 #game button {
-    position: relative;
-    z-index: 3;
+  position: relative;
+  z-index: 3;
 
-    min-width: 135px;
+  min-width: 135px;
 
-    margin: 8px;
+  margin: 8px;
 
-    padding: 13px 25px;
+  padding: 13px 25px;
 
-    border: none;
+  border: none;
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    font-size: 1rem;
+  font-size: 1rem;
 
-    font-weight: bold;
+  font-weight: bold;
 
-    text-transform: uppercase;
+  text-transform: uppercase;
 
-    letter-spacing: 1px;
+  letter-spacing: 1px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        filter 0.2s ease,
-        opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease,
+    opacity 0.2s ease;
 }
-
 
 /*
    Hover geral
 */
 
 #game button:hover:not(:disabled) {
-    transform: translateY(-3px);
+  transform: translateY(-3px);
 
-    filter: brightness(1.1);
+  filter: brightness(1.1);
 
-    box-shadow:
-        0 8px 15px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.45);
 }
-
 
 /*
    Click
 */
 
 #game button:active:not(:disabled) {
-    transform: translateY(1px);
+  transform: translateY(1px);
 
-    box-shadow:
-        0 3px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
 }
-
 
 /* =========================================================
    BOTÃO CARD
    ========================================================= */
 
 #card {
-    background: #2563eb !important;
+  background: #2563eb !important;
 
-    border: 2px solid #60a5fa !important;
+  border: 2px solid #60a5fa !important;
 
-    color: white !important;
+  color: white !important;
 }
-
 
 /* =========================================================
    BOTÃO STAND
    ========================================================= */
 
 #stand {
-    background: #dc2626 !important;
+  background: #dc2626 !important;
 
-    border: 2px solid #f87171 !important;
+  border: 2px solid #f87171 !important;
 
-    color: white !important;
+  color: white !important;
 }
-
 
 /* =========================================================
    BOTÃO NEW GAME
    ========================================================= */
 
 #new_game {
-    background: #16a34a !important;
+  background: #16a34a !important;
 
-    border: 2px solid #4ade80 !important;
+  border: 2px solid #4ade80 !important;
 
-    color: white !important;
+  color: white !important;
 }
-
 
 /* =========================================================
    BOTÕES DESATIVADOS
    ========================================================= */
 
 #game button:disabled {
-    opacity: 0.35;
+  opacity: 0.35;
 
-    cursor: not-allowed;
+  cursor: not-allowed;
 
-    transform: none;
+  transform: none;
 
-    box-shadow: none;
+  box-shadow: none;
 
-    filter: grayscale(0.4);
+  filter: grayscale(0.4);
 }
-
 
 /* =========================================================
    ÁREA DE STATUS
@@ -443,132 +416,115 @@ main {
 
 #game_status,
 #status_game {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 
-    width: 100%;
-    max-width: 950px;
+  width: 100%;
+  max-width: 950px;
 
-    min-height: 65px;
+  min-height: 65px;
 
-    margin-top: 20px;
+  margin-top: 20px;
 
-    padding: 18px 25px;
+  padding: 18px 25px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #1f2937,
-            #111827
-        );
+  background: linear-gradient(135deg, #1f2937, #111827);
 
-    border: 2px solid #f5c542;
+  border: 2px solid #f5c542;
 
-    border-radius: 14px;
+  border-radius: 14px;
 
-    text-align: center;
+  text-align: center;
 
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 
-    font-weight: bold;
+  font-weight: bold;
 
-    color: #f5c542;
+  color: #f5c542;
 
-    box-shadow:
-        0 6px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
-
 
 /* =========================================================
    DEBUG
    ========================================================= */
 
 #sec_debug {
-    width: 100%;
-    max-width: 950px;
+  width: 100%;
+  max-width: 950px;
 
-    margin-top: 25px;
+  margin-top: 25px;
 
-    padding: 15px 20px;
+  padding: 15px 20px;
 
-    background: #020617;
+  background: #020617;
 
-    border: 1px solid #374151;
+  border: 1px solid #374151;
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    color: #9ca3af;
+  color: #9ca3af;
 
-    font-family: monospace;
+  font-family: monospace;
 
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 
-    box-shadow:
-        0 5px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
 }
-
 
 #sec_debug h2 {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 
-    color: #6b7280;
+  color: #6b7280;
 
-    letter-spacing: 2px;
+  letter-spacing: 2px;
 
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
-
 
 #debug {
-    word-break: break-word;
+  word-break: break-word;
 
-    line-height: 1.5;
+  line-height: 1.5;
 
-    overflow-wrap: anywhere;
+  overflow-wrap: anywhere;
 }
-
 
 /* =========================================================
    FOOTER
    ========================================================= */
 
 footer {
-    width: 100%;
+  width: 100%;
 
-    padding: 15px;
+  padding: 15px;
 
-    text-align: center;
+  text-align: center;
 
-    color: #6b7280;
+  color: #6b7280;
 
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 }
-
 
 /* =========================================================
    ANIMAÇÃO DAS CARTAS
    ========================================================= */
 
 @keyframes dealCard {
-    from {
-        opacity: 0;
+  from {
+    opacity: 0;
 
-        transform:
-            translateY(-30px)
-            scale(0.8);
-    }
+    transform: translateY(-30px) scale(0.8);
+  }
 
-    to {
-        opacity: 1;
+  to {
+    opacity: 1;
 
-        transform:
-            translateY(0)
-            scale(1);
-    }
+    transform: translateY(0) scale(1);
+  }
 }
-
 
 /*
    Cada carta criada pelo JavaScript
@@ -576,150 +532,189 @@ footer {
 */
 
 .card {
-    animation: dealCard 0.35s ease-out;
+  animation: dealCard 0.35s ease-out;
 }
-
 
 /* =========================================================
    RESPONSIVE - TABLET
    ========================================================= */
 
 @media (max-width: 768px) {
+  header {
+    padding: 20px 10px 10px;
+  }
 
-    header {
-        padding: 20px 10px 10px;
-    }
+  header h1 {
+    font-size: 2.3rem;
 
-    header h1 {
-        font-size: 2.3rem;
+    letter-spacing: 3px;
+  }
 
-        letter-spacing: 3px;
-    }
+  main {
+    padding: 10px;
+  }
 
-    main {
-        padding: 10px;
-    }
+  #game {
+    min-height: 500px;
 
-    #game {
-        min-height: 500px;
+    padding: 25px 20px;
 
-        padding: 25px 20px;
+    border-width: 8px;
 
-        border-width: 8px;
+    border-radius: 25px;
+  }
 
-        border-radius: 25px;
-    }
+  #game h2 {
+    font-size: 1.3rem;
+  }
 
-    #game h2 {
-        font-size: 1.3rem;
-    }
+  #dealer,
+  #player {
+    min-height: 120px;
 
-    #dealer,
-    #player {
-        min-height: 120px;
+    gap: 8px;
+  }
 
-        gap: 8px;
-    }
+  .card {
+    width: 70px;
+    height: 100px;
 
-    .card {
-        width: 70px;
-        height: 100px;
+    font-size: 1.6rem;
+  }
 
-        font-size: 1.6rem;
-    }
+  .hidden-card {
+    font-size: 2.3rem;
+  }
 
-    .hidden-card {
-        font-size: 2.3rem;
-    }
+  #game button {
+    min-width: 115px;
 
-    #game button {
-        min-width: 115px;
-
-        padding: 11px 18px;
-    }
+    padding: 11px 18px;
+  }
 }
-
 
 /* =========================================================
    RESPONSIVE - TELEMÓVEL
    ========================================================= */
 
 @media (max-width: 480px) {
+  header h1 {
+    font-size: 1.8rem;
 
-    header h1 {
-        font-size: 1.8rem;
+    letter-spacing: 2px;
+  }
 
-        letter-spacing: 2px;
-    }
+  #game {
+    min-height: 450px;
 
-    #game {
-        min-height: 450px;
+    padding: 20px 12px;
 
-        padding: 20px 12px;
+    border-width: 5px;
 
-        border-width: 5px;
+    border-radius: 20px;
+  }
 
-        border-radius: 20px;
-    }
+  #game::before {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
 
-    #game::before {
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
+    border-radius: 15px;
+  }
 
-        border-radius: 15px;
-    }
+  #game h2 {
+    font-size: 1.1rem;
 
-    #game h2 {
-        font-size: 1.1rem;
+    letter-spacing: 2px;
+  }
 
-        letter-spacing: 2px;
-    }
+  #dealer,
+  #player {
+    min-height: 95px;
 
-    #dealer,
-    #player {
-        min-height: 95px;
+    gap: 5px;
 
-        gap: 5px;
+    margin-bottom: 15px;
+  }
 
-        margin-bottom: 15px;
-    }
+  .card {
+    width: 52px;
+    height: 76px;
 
-    .card {
-        width: 52px;
-        height: 76px;
+    border-radius: 7px;
 
-        border-radius: 7px;
+    font-size: 1.2rem;
+  }
 
-        font-size: 1.2rem;
-    }
+  .hidden-card {
+    font-size: 1.7rem;
+  }
 
-    .hidden-card {
-        font-size: 1.7rem;
-    }
+  #game button {
+    width: 90%;
 
-    #game button {
-        width: 90%;
+    margin: 5px auto;
 
-        margin: 5px auto;
+    display: block;
 
-        display: block;
+    padding: 10px;
+  }
 
-        padding: 10px;
-    }
+  #game_status,
+  #status_game {
+    font-size: 1rem;
 
-    #game_status,
-    #status_game {
-        font-size: 1rem;
+    padding: 15px;
+  }
 
-        padding: 15px;
-    }
+  #sec_debug {
+    font-size: 0.7rem;
 
-    #sec_debug {
-        font-size: 0.7rem;
-
-        padding: 10px;
-    }
+    padding: 10px;
+  }
 }
-```
+
+/* Coloca as cartas e a zona de estatísticas lado a lado */
+.cards-wrapper {
+  display: flex;
+  align-items: center; /* Centra tudo verticalmente */
+  gap: 30px; /* Espaço entre a última carta e o texto do total */
+  min-height: 120px;
+}
+
+/* Garante que as cartas ficam lado a lado entre si */
+.cards-container {
+  display: flex;
+  gap: 10px;
+}
+
+/* Agrupa o total e o ícone (V ou X) */
+.stats-container {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espaço entre o "Total: 21" e o ícone "✔" */
+}
+
+/* Estilo para o número da soma */
+.score-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(170, 221, 62); /* Ajuste para a cor que preferir */
+}
+
+/* Estilo base para o ícone */
+.result-icon {
+  font-size: 2.5rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Classes para adicionar via JavaScript dependendo do resultado */
+.icon-win {
+  color: #12b123; /* Verde para Vitória */
+}
+
+.icon-lose {
+  color: #dc3545; /* Vermelho para Derrota (Bust/Perdeu) */
+}

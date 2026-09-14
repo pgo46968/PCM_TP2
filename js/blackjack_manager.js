@@ -2,12 +2,17 @@
 
 let game = null; // Stores the current instance of the game
 
+
 /**
  * Function to debug and display the state of the game object.
  * @param {Object} obj - The object to be debugged.
  */
 function debug(obj) {
-  document.getElementById("debug").innerHTML = JSON.stringify(obj);
+  let debugDiv = document.getElementById("debug");
+  // Só tenta atualizar os dados se o elemento "debug" estiver ativo no HTML
+  if (debugDiv) {
+    debugDiv.innerHTML = JSON.stringify(obj);
+  }
 }
 
 /**
@@ -49,33 +54,55 @@ function clearPage() {
   document.getElementById("player").innerHTML = "";
 
   let resultDiv = document.getElementById("game_status");
-
   if (resultDiv) {
     resultDiv.innerHTML = "";
   }
+
+  // Limpa os ícones e reseta os totais para a nova ronda
+  document.getElementById("player-icon").innerText = "";
+  document.getElementById("dealer-icon").innerText = "";
+  document.getElementById("player-score").innerText = "0";
+  document.getElementById("dealer-score").innerText = "0";
 }
 
 /**
  * Displays the final result of the game.
  * @param {Object} state - Current game state.
  */
+/**
+ * Displays the final result of the game.
+ * @param {Object} state - Current game state.
+ */
 function finalScore(state) {
   let resultDiv = document.getElementById("game_status");
+  let playerIcon = document.getElementById('player-icon');
+  let dealerIcon = document.getElementById('dealer-icon');
 
-  if (!resultDiv) {
-    return;
+  // Aborta a função se a página ainda não tiver carregado estes elementos
+  if (!resultDiv || !playerIcon || !dealerIcon) {
+      return;
   }
 
   if (state.playerBusted) {
     resultDiv.innerHTML = "O Jogador rebentou! O Dealer vence.";
+    playerIcon.innerText = '✖'; playerIcon.className = 'result-icon icon-lose';
+    dealerIcon.innerText = '✔'; dealerIcon.className = 'result-icon icon-win';
   } else if (state.dealerBusted) {
     resultDiv.innerHTML = "O Dealer rebentou! O Jogador vence!";
+    playerIcon.innerText = '✔'; playerIcon.className = 'result-icon icon-win';
+    dealerIcon.innerText = '✖'; dealerIcon.className = 'result-icon icon-lose';
   } else if (state.playerWon) {
     resultDiv.innerHTML = "O Jogador vence!";
+    playerIcon.innerText = '✔'; playerIcon.className = 'result-icon icon-win';
+    dealerIcon.innerText = '✖'; dealerIcon.className = 'result-icon icon-lose';
   } else if (state.dealerWon) {
     resultDiv.innerHTML = "O Dealer vence!";
+    playerIcon.innerText = '✖'; playerIcon.className = 'result-icon icon-lose';
+    dealerIcon.innerText = '✔'; dealerIcon.className = 'result-icon icon-win';
   } else {
     resultDiv.innerHTML = "Empate!";
+    playerIcon.innerText = '='; playerIcon.className = 'result-icon';
+    dealerIcon.innerText = '='; dealerIcon.className = 'result-icon';
   }
 }
 
@@ -127,22 +154,45 @@ function newGame() {
   updatePlayer(game.getGameState());
 }
 
-/**
- * Updates the player's state in the game.
- * @param {Object} state - The current game state.
- */
 function updatePlayer(state) {
+  // Atualiza sempre a pontuação total do jogador
+  if (state.playerScore !== undefined) {
+    document.getElementById("player-score").innerText = state.playerScore;
+  }
+
+  // Lógica condicional para a pontuação do Dealer
+  if (state.dealerScore !== undefined) {
+    if (game.dealerTurn === false) {
+      // Se for a vez do Jogador: Calcula e mostra APENAS o valor da 1ª carta do Dealer
+      let cartasDealer = game.getDealerCards();
+      if (cartasDealer.length > 0) {
+        let pontuacaoVisivel = game.getCardsValue([cartasDealer[0]]);
+        document.getElementById("dealer-score").innerText = pontuacaoVisivel;
+      }
+    } else {
+      // Se for a vez do Dealer (carta já virada): Mostra o total real
+      document.getElementById("dealer-score").innerText = state.dealerScore;
+    }
+  }
+
   if (state.gameEnded) {
     finalizeButtons();
     finalScore(state);
   }
 }
 
-/**
- * Updates the dealer's state in the game.
- * @param {Object} state - The current game state.
- */
 function updateDealer(state) {
+  // Mantém os totais sincronizados usando a mesma lógica
+  if (state.playerScore !== undefined) {
+    document.getElementById("player-score").innerText = state.playerScore;
+  }
+
+  if (state.dealerScore !== undefined) {
+    // Como o updateDealer só é chamado quando já é o turno do Dealer,
+    // podemos mostrar a pontuação total diretamente.
+    document.getElementById("dealer-score").innerText = state.dealerScore;
+  }
+
   if (state.gameEnded) {
     finalizeButtons();
     finalScore(state);
@@ -201,25 +251,43 @@ function dealerNewCard() {
  * Finishes the dealer's turn.
  */
 function dealerFinish() {
-  // Change to dealer's turn
+  // 1. Bloqueia os botões imediatamente após o 1º clique para evitar cliques repetidos
+  document.getElementById("card").disabled = true;
+  document.getElementById("stand").disabled = true;
+
+  // 2. Muda o turno para o Dealer
   game.setDealerTurn(true);
 
-  // Get current state
+  // 3. Atualiza o estado (Isto diz à lógica que agora as regras do Dealer aplicam-se)
   let state = game.getGameState();
 
-  // Get dealer elements and cards
+  // 4. Revela a carta escondida
   let dealerDiv = document.getElementById("dealer");
   let dCards = game.getDealerCards();
 
-  // Reveal the hidden second card
   if (dealerDiv && dealerDiv.children[1] && dCards[1]) {
     printCard(dealerDiv.children[1], dCards[1], true);
   }
 
-  // Dealer draws cards until game ends
-  while (!state.gameEnded) {
-    state = dealerNewCard();
+  // Sincroniza a pontuação do dealer no ecrã (como a carta escondida já foi virada, o total atualiza)
+  updateDealer(state);
+
+  // 5. Função recursiva com temporizador (Substitui o antigo ciclo while)
+  function tirarProximaCarta(estadoAtual) {
+    // Se o jogo ainda não terminou, aguarda 1 segundo e tira outra carta
+    if (!estadoAtual.gameEnded) {
+      setTimeout(() => {
+        // Tira a carta, desenha no ecrã e avalia o novo estado
+        let proximoEstado = dealerNewCard();
+
+        // Chama a própria função novamente para ver se precisa de mais cartas
+        tirarProximaCarta(proximoEstado);
+      }, 1000); // 1000 representa 1 segundo de intervalo. Pode alterar para 500 para ser mais rápido.
+    }
   }
+
+  // 6. Inicia o processo automático de tirar as cartas
+  tirarProximaCarta(state);
 }
 
 /**

@@ -165,7 +165,11 @@ class Blackjack {
     const playerPts = this.getCardsValue(this.playerCards);
     const dealerPts = this.getCardsValue(this.dealerCards);
 
-    // Verifica se alguém rebentou o limite estipulado na classe (25 pontos)
+    // Mantém a exportação das pontuações para o ecrã
+    this.state.playerScore = playerPts;
+    this.state.dealerScore = dealerPts;
+
+    // Verifica se alguém rebentou o limite estipulado (25 pontos)
     this.state.playerBusted = playerPts > Blackjack.MAX_POINTS;
     this.state.dealerBusted = dealerPts > Blackjack.MAX_POINTS;
 
@@ -178,17 +182,23 @@ class Blackjack {
       this.state.playerWon = true;
       this.state.dealerWon = false;
     } else if (this.dealerTurn) {
-      // Se for o turno do dealer, verifica se ele atingiu os pontos necessários para parar
+      
+      // REGRA CORRIGIDA: O dealer é OBRIGADO a tirar cartas até atingir pelo menos os 21 pontos.
       if (dealerPts >= Blackjack.DEALER_MAX_TURN_POINTS) {
+        
+        // Atingiu o objetivo, logo o jogo termina.
         this.state.gameEnded = true;
+
+        // Só após parar é que compara os resultados com o jogador
         if (dealerPts > playerPts) {
           this.state.dealerWon = true;
+          this.state.playerWon = false;
         } else if (playerPts > dealerPts) {
           this.state.playerWon = true;
-        } else {
-          // Em caso de empate, ambos mantêm a flag a 'false' ou podes ajustar a lógica de state
           this.state.dealerWon = false;
-          this.state.playerWon = false;
+        } else {
+          this.state.dealerWon = false;
+          this.state.playerWon = false; // Empate
         }
       }
     }

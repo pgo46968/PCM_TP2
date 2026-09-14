@@ -41,15 +41,32 @@
     <main class="container">
       <!-- Main game section -->
       <section id="game">
-        <h2>Dealer</h2>
-        <!-- Subheading for the dealer's section -->
-        <p id="dealer"></p>
-        <!-- Placeholder for displaying dealer's cards -->
+        <div class="game-participant mb-4">
+          <h2>Dealer</h2>
+          <div class="cards-wrapper">
+            <!-- Zona das Cartas (Mantém o id="dealer" original) -->
+            <div id="dealer" class="cards-container"></div>
+            <!-- Zona da Pontuação e Ícone de Resultado -->
+            <div class="stats-container">
+              <span id="dealer-score" class="score-text">0</span>
+              <span id="dealer-icon" class="result-icon"></span>
+            </div>
+          </div>
+        </div>
 
-        <h2>Player</h2>
-        <!-- Subheading for the player's section -->
-        <p id="player"></p>
-        <!-- Placeholder for displaying player's cards -->
+        <!-- ÁREA DO JOGADOR -->
+        <div class="game-participant mb-4">
+          <h2>Player</h2>
+          <div class="cards-wrapper">
+            <!-- Zona das Cartas (Mantém o id="player" original) -->
+            <div id="player" class="cards-container"></div>
+            <!-- Zona da Pontuação e Ícone de Resultado -->
+            <div class="stats-container">
+              <span id="player-score" class="score-text">0</span>
+              <span id="player-icon" class="result-icon"></span>
+            </div>
+          </div>
+        </div>
 
         <!-- Button for the player to draw a new card -->
         <button
