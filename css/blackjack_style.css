@@ -602,6 +602,33 @@ footer {
     font-size: 1.8rem;
 
     letter-spacing: 2px;
+    /* Altera a estrutura para empilhar cartas e estatísticas na vertical */
+  .cards-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px; /* Reduz o espaço entre as cartas e a pontuação */
+    min-height: auto;
+  }
+
+  /* Permite que as cartas saltem para a linha de baixo se forem muitas */
+  .cards-container {
+    flex-wrap: wrap; 
+    justify-content: center;
+  }
+
+  /* Centra o total e o símbolo */
+  .stats-container {
+    justify-content: center;
+  }
+
+  /* Reduz ligeiramente o tamanho da pontuação e do ícone para caberem melhor */
+  .score-text {
+    font-size: 1.2rem;
+  }
+
+  .result-icon {
+    font-size: 2rem;
+  }
   }
 
   #game {
