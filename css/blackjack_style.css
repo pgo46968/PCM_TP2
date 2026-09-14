@@ -749,7 +749,7 @@ footer {
 /* =========================================================
    CORREÇÃO PARA ECRÃS PEQUENOS (Tem de ser o último código)
    ========================================================= */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   /* Empilha as cartas em cima e a pontuação em baixo */
   .cards-wrapper {
     flex-direction: column !important;
