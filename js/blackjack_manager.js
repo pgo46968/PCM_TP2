@@ -69,10 +69,6 @@ function clearPage() {
  * Displays the final result of the game.
  * @param {Object} state - Current game state.
  */
-/**
- * Displays the final result of the game.
- * @param {Object} state - Current game state.
- */
 function finalScore(state) {
   let resultDiv = document.getElementById("game_status");
   let playerIcon = document.getElementById('player-icon');
@@ -157,40 +153,22 @@ function newGame() {
 function updatePlayer(state) {
   // Atualiza sempre a pontuação total do jogador
   if (state.playerScore !== undefined) {
-    document.getElementById("player-score").innerText = state.playerScore;
+      document.getElementById('player-score').innerText = state.playerScore;
   }
 
   // Lógica condicional para a pontuação do Dealer
   if (state.dealerScore !== undefined) {
-    if (game.dealerTurn === false) {
-      // Se for a vez do Jogador: Calcula e mostra APENAS o valor da 1ª carta do Dealer
-      let cartasDealer = game.getDealerCards();
-      if (cartasDealer.length > 0) {
-        let pontuacaoVisivel = game.getCardsValue([cartasDealer[0]]);
-        document.getElementById("dealer-score").innerText = pontuacaoVisivel;
+      // CORREÇÃO: Só esconde a carta se for a vez do Jogador E o jogo não tiver terminado
+      if (game.dealerTurn === false && state.gameEnded === false) {
+          let cartasDealer = game.getDealerCards();
+          if (cartasDealer.length > 0) {
+              let pontuacaoVisivel = game.getCardsValue([cartasDealer[0]]);
+              document.getElementById('dealer-score').innerText = pontuacaoVisivel;
+          }
+      } else {
+          // Se for a vez do Dealer OU o jogo já tiver acabado (ex: Jogador rebentou): Mostra o total real
+          document.getElementById('dealer-score').innerText = state.dealerScore;
       }
-    } else {
-      // Se for a vez do Dealer (carta já virada): Mostra o total real
-      document.getElementById("dealer-score").innerText = state.dealerScore;
-    }
-  }
-
-  if (state.gameEnded) {
-    finalizeButtons();
-    finalScore(state);
-  }
-}
-
-function updateDealer(state) {
-  // Mantém os totais sincronizados usando a mesma lógica
-  if (state.playerScore !== undefined) {
-    document.getElementById("player-score").innerText = state.playerScore;
-  }
-
-  if (state.dealerScore !== undefined) {
-    // Como o updateDealer só é chamado quando já é o turno do Dealer,
-    // podemos mostrar a pontuação total diretamente.
-    document.getElementById("dealer-score").innerText = state.dealerScore;
   }
 
   if (state.gameEnded) {
@@ -251,17 +229,15 @@ function dealerNewCard() {
  * Finishes the dealer's turn.
  */
 function dealerFinish() {
-  // 1. Bloqueia os botões imediatamente após o 1º clique para evitar cliques repetidos
+  // 1. Bloqueia os botões imediatamente após o 1º clique
   document.getElementById("card").disabled = true;
   document.getElementById("stand").disabled = true;
 
-  // 2. Muda o turno para o Dealer
+  // 2. Muda o turno para o Dealer e recalcula o estado (somando as 2 cartas)
   game.setDealerTurn(true);
-
-  // 3. Atualiza o estado (Isto diz à lógica que agora as regras do Dealer aplicam-se)
   let state = game.getGameState();
 
-  // 4. Revela a carta escondida
+  // 3. Revela a carta escondida no ecrã
   let dealerDiv = document.getElementById("dealer");
   let dCards = game.getDealerCards();
 
@@ -269,27 +245,27 @@ function dealerFinish() {
     printCard(dealerDiv.children[1], dCards[1], true);
   }
 
-  // Sincroniza a pontuação do dealer no ecrã (como a carta escondida já foi virada, o total atualiza)
-  updateDealer(state);
+  // 4. CORREÇÃO: Força o ecrã a mostrar imediatamente o total real do Dealer
+  document.getElementById('dealer-score').innerText = state.dealerScore;
 
-  // 5. Função recursiva com temporizador (Substitui o antigo ciclo while)
+  // 5. Avalia se o jogo terminou imediatamente com as duas cartas (ex: atingiu logo 21)
+  if (state.gameEnded) {
+    updateDealer(state); // Exibe os ícones de vitória/derrota
+    return; // Interrompe a função aqui para não tentar tirar mais cartas
+  }
+
+  // 6. Caso o jogo não tenha terminado, inicia o temporizador para puxar mais cartas
   function tirarProximaCarta(estadoAtual) {
-    // Se o jogo ainda não terminou, aguarda 1 segundo e tira outra carta
     if (!estadoAtual.gameEnded) {
       setTimeout(() => {
-        // Tira a carta, desenha no ecrã e avalia o novo estado
         let proximoEstado = dealerNewCard();
-
-        // Chama a própria função novamente para ver se precisa de mais cartas
         tirarProximaCarta(proximoEstado);
-      }, 1000); // 1000 representa 1 segundo de intervalo. Pode alterar para 500 para ser mais rápido.
+      }, 1000); // Pausa de 1 segundo entre cartas
     }
   }
 
-  // 6. Inicia o processo automático de tirar as cartas
   tirarProximaCarta(state);
 }
-
 /**
  * Prints a card in the graphical interface.
  *
