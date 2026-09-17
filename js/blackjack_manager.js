@@ -52,15 +52,15 @@ function finalScore(state) {
   if (!resultDiv || !playerIcon || !dealerIcon) return;
 
   if (state.playerBusted) {
-    resultDiv.innerHTML = "O Jogador rebentou! O Dealer vence.";
+    resultDiv.innerHTML = "O Player rebentou! O Dealer vence.";
     playerIcon.innerText = '✖'; playerIcon.className = 'result-icon icon-lose';
     dealerIcon.innerText = '✔'; dealerIcon.className = 'result-icon icon-win';
   } else if (state.dealerBusted) {
-    resultDiv.innerHTML = "O Dealer rebentou! O Jogador vence!";
+    resultDiv.innerHTML = "O Dealer rebentou! O Player vence!";
     playerIcon.innerText = '✔'; playerIcon.className = 'result-icon icon-win';
     dealerIcon.innerText = '✖'; dealerIcon.className = 'result-icon icon-lose';
   } else if (state.playerWon) {
-    resultDiv.innerHTML = "O Jogador vence!";
+    resultDiv.innerHTML = "O Player vence!";
     playerIcon.innerText = '✔'; playerIcon.className = 'result-icon icon-win';
     dealerIcon.innerText = '✖'; dealerIcon.className = 'result-icon icon-lose';
   } else if (state.dealerWon) {
