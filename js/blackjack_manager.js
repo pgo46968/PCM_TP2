@@ -27,50 +27,66 @@ function finalizeButtons() {
 function clearPage() {
   document.getElementById("dealer").innerHTML = "";
   document.getElementById("player").innerHTML = "";
-  
+
   let resultDiv = document.getElementById("game_status");
   if (resultDiv) resultDiv.innerHTML = "";
-  
-  let playerIcon = document.getElementById('player-icon');
-  if (playerIcon) { playerIcon.innerText = ''; playerIcon.className = 'result-icon'; }
-  
-  let dealerIcon = document.getElementById('dealer-icon');
-  if (dealerIcon) { dealerIcon.innerText = ''; dealerIcon.className = 'result-icon'; }
-  
-  let playerScore = document.getElementById('player-score');
-  if (playerScore) playerScore.innerText = '0';
-  
-  let dealerScore = document.getElementById('dealer-score');
-  if (dealerScore) dealerScore.innerText = '0';
+
+  let playerIcon = document.getElementById("player-icon");
+  if (playerIcon) {
+    playerIcon.innerText = "";
+    playerIcon.className = "result-icon";
+  }
+
+  let dealerIcon = document.getElementById("dealer-icon");
+  if (dealerIcon) {
+    dealerIcon.innerText = "";
+    dealerIcon.className = "result-icon";
+  }
+
+  let playerScore = document.getElementById("player-score");
+  if (playerScore) playerScore.innerText = "0";
+
+  let dealerScore = document.getElementById("dealer-score");
+  if (dealerScore) dealerScore.innerText = "0";
 }
 
 function finalScore(state) {
   let resultDiv = document.getElementById("game_status");
-  let playerIcon = document.getElementById('player-icon');
-  let dealerIcon = document.getElementById('dealer-icon');
+  let playerIcon = document.getElementById("player-icon");
+  let dealerIcon = document.getElementById("dealer-icon");
 
   if (!resultDiv || !playerIcon || !dealerIcon) return;
 
   if (state.playerBusted) {
     resultDiv.innerHTML = "O Player rebentou! O Dealer vence.";
-    playerIcon.innerText = '✖'; playerIcon.className = 'result-icon icon-lose';
-    dealerIcon.innerText = '✔'; dealerIcon.className = 'result-icon icon-win';
+    playerIcon.innerText = "✖";
+    playerIcon.className = "result-icon icon-lose";
+    dealerIcon.innerText = "✔";
+    dealerIcon.className = "result-icon icon-win";
   } else if (state.dealerBusted) {
     resultDiv.innerHTML = "O Dealer rebentou! O Player vence!";
-    playerIcon.innerText = '✔'; playerIcon.className = 'result-icon icon-win';
-    dealerIcon.innerText = '✖'; dealerIcon.className = 'result-icon icon-lose';
+    playerIcon.innerText = "✔";
+    playerIcon.className = "result-icon icon-win";
+    dealerIcon.innerText = "✖";
+    dealerIcon.className = "result-icon icon-lose";
   } else if (state.playerWon) {
     resultDiv.innerHTML = "O Player vence!";
-    playerIcon.innerText = '✔'; playerIcon.className = 'result-icon icon-win';
-    dealerIcon.innerText = '✖'; dealerIcon.className = 'result-icon icon-lose';
+    playerIcon.innerText = "✔";
+    playerIcon.className = "result-icon icon-win";
+    dealerIcon.innerText = "✖";
+    dealerIcon.className = "result-icon icon-lose";
   } else if (state.dealerWon) {
     resultDiv.innerHTML = "O Dealer vence!";
-    playerIcon.innerText = '✖'; playerIcon.className = 'result-icon icon-lose';
-    dealerIcon.innerText = '✔'; dealerIcon.className = 'result-icon icon-win';
+    playerIcon.innerText = "✖";
+    playerIcon.className = "result-icon icon-lose";
+    dealerIcon.innerText = "✔";
+    dealerIcon.className = "result-icon icon-win";
   } else {
     resultDiv.innerHTML = "Empate!";
-    playerIcon.innerText = '='; playerIcon.className = 'result-icon';
-    dealerIcon.innerText = '='; dealerIcon.className = 'result-icon';
+    playerIcon.innerText = "=";
+    playerIcon.className = "result-icon";
+    dealerIcon.innerText = "=";
+    dealerIcon.className = "result-icon";
   }
 }
 
@@ -103,21 +119,21 @@ function newGame() {
 }
 
 function updatePlayer(state) {
-  let pScore = document.getElementById('player-score');
+  let pScore = document.getElementById("player-score");
   if (state.playerScore !== undefined && pScore) {
-      pScore.innerText = state.playerScore;
+    pScore.innerText = state.playerScore;
   }
 
-  let dScore = document.getElementById('dealer-score');
+  let dScore = document.getElementById("dealer-score");
   if (state.dealerScore !== undefined && dScore) {
-      if (game.dealerTurn === false && state.gameEnded === false) {
-          let cartasDealer = game.getDealerCards();
-          if (cartasDealer.length > 0) {
-              dScore.innerText = game.getCardsValue([cartasDealer[0]]);
-          }
-      } else {
-          dScore.innerText = state.dealerScore;
+    if (game.dealerTurn === false && state.gameEnded === false) {
+      let cartasDealer = game.getDealerCards();
+      if (cartasDealer.length > 0) {
+        dScore.innerText = game.getCardsValue([cartasDealer[0]]);
       }
+    } else {
+      dScore.innerText = state.dealerScore;
+    }
   }
 
   if (state.gameEnded) {
@@ -127,14 +143,14 @@ function updatePlayer(state) {
 }
 
 function updateDealer(state) {
-  let pScore = document.getElementById('player-score');
+  let pScore = document.getElementById("player-score");
   if (state.playerScore !== undefined && pScore) {
-      pScore.innerText = state.playerScore;
+    pScore.innerText = state.playerScore;
   }
-  
-  let dScore = document.getElementById('dealer-score');
+
+  let dScore = document.getElementById("dealer-score");
   if (state.dealerScore !== undefined && dScore) {
-      dScore.innerText = state.dealerScore;
+    dScore.innerText = state.dealerScore;
   }
 
   if (state.gameEnded) {
@@ -147,7 +163,7 @@ function playerNewCard() {
   let state = game.playerMove();
   let pCards = game.getPlayerCards();
   let lastCard = pCards[pCards.length - 1];
-  
+
   printCard(document.getElementById("player"), lastCard);
   updatePlayer(state);
   debug(game);
@@ -157,7 +173,7 @@ function dealerNewCard() {
   let state = game.dealerMove();
   let dCards = game.getDealerCards();
   let lastCard = dCards[dCards.length - 1];
-  
+
   printCard(document.getElementById("dealer"), lastCard);
   updateDealer(state);
   debug(game);
@@ -178,7 +194,7 @@ function dealerFinish() {
     printCard(dealerDiv.children[1], dCards[1], true);
   }
 
-  let dScore = document.getElementById('dealer-score');
+  let dScore = document.getElementById("dealer-score");
   if (dScore) dScore.innerText = state.dealerScore;
 
   if (state.gameEnded) {
@@ -200,15 +216,18 @@ function dealerFinish() {
 
 function printCard(element, card, replace = false) {
   if (!element || !card) return;
-  
+
   const cardText = `${card.rank}${card.suit}`;
-  
+  // Verifica se o naipe é de Copas ou Ouros
+  const isRed = card.suit === "♥" || card.suit === "♦";
+  const cardClass = isRed ? "card red-suit" : "card";
+
   if (replace) {
     element.innerHTML = cardText;
-    element.className = "card";
+    element.className = cardClass;
   } else {
     let cardDiv = document.createElement("div");
-    cardDiv.className = "card";
+    cardDiv.className = cardClass;
     cardDiv.innerHTML = cardText;
     element.appendChild(cardDiv);
   }

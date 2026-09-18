@@ -18,7 +18,21 @@ class Blackjack {
 
   newDeck() {
     const suits = ["♥", "♦", "♣", "♠"];
-    const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
+    const ranks = [
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "J",
+      "Q",
+      "K",
+      "A",
+    ];
     const deck = [];
     for (let suit of suits) {
       for (let rank of ranks) {
@@ -101,7 +115,12 @@ class Blackjack {
       this.state.playerWon = true;
       this.state.dealerWon = false;
     } else if (this.dealerTurn) {
-      if (dealerPts >= Blackjack.DEALER_MAX_TURN_POINTS) {
+      // O Dealer para se ultrapassar o Player, OU se estiver empatado num valor seguro de 21 pontos.
+      if (
+        dealerPts > playerPts ||
+        (dealerPts === playerPts &&
+          dealerPts >= Blackjack.DEALER_MAX_TURN_POINTS)
+      ) {
         this.state.gameEnded = true;
         if (dealerPts > playerPts) {
           this.state.dealerWon = true;
@@ -111,7 +130,7 @@ class Blackjack {
           this.state.dealerWon = false;
         } else {
           this.state.dealerWon = false;
-          this.state.playerWon = false; 
+          this.state.playerWon = false;
         }
       }
     }
