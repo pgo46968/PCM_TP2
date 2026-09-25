@@ -1,4 +1,3 @@
-```css
 /* =========================================================
    BLACKJACK 25
    CSS ADAPTADO AO HTML + BLACKJACK_MANAGER.JS
@@ -6,93 +5,86 @@
 
 
 /* =========================================================
-   RESET
+   RESET (Limpeza de formatações padrão dos navegadores)
    ========================================================= */
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box; /* Garante que o padding e a borda não aumentam a largura total do elemento */
+  margin: 0;              /* Remove as margens exteriores padrão */
+  padding: 0;             /* Remove os espaçamentos interiores padrão */
 }
 
 /* =========================================================
-   PÁGINA
+   PÁGINA (Estilo global do corpo do documento)
    ========================================================= */
 
 body {
-  min-height: 100vh;
+  min-height: 100vh;      /* Garante que o corpo ocupa, no mínimo, 100% da altura do ecrã */
 
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif; /* Define a fonte principal da página */
 
+  /* Cria um fundo com um gradiente radial escuro (simulando um ambiente de casino noturno) */
   background: radial-gradient(circle at top, #1f2937, #080b10 70%);
 
-  color: white;
+  color: white;           /* Define a cor padrão do texto como branco */
 
-  display: flex;
-  flex-direction: column;
+  display: flex;          /* Ativa o Flexbox para organizar os elementos da página */
+  flex-direction: column; /* Coloca os elementos em coluna (um debaixo do outro: header, main, footer) */
 }
 
 /* =========================================================
-   HEADER
+   HEADER (Cabeçalho da página)
    ========================================================= */
 
 header {
-  text-align: center;
-
-  padding: 25px 10px 15px;
+  text-align: center;     /* Centra o texto do cabeçalho */
+  padding: 25px 10px 15px; /* Define o espaçamento interno (top, right/left, bottom) */
 }
 
 header h1 {
-  font-size: 3rem;
+  font-size: 3rem;        /* Tamanho grande para o título do jogo */
+  font-weight: 700;       /* Define a espessura da fonte como negrito */
+  letter-spacing: 4px;    /* Espaçamento entre as letras para dar um ar mais elegante */
+  color: #f5c542;         /* Cor dourada/amarela para o título */
+  text-transform: uppercase; /* Força todo o texto a ficar em maiúsculas */
 
-  font-weight: 700;
-
-  letter-spacing: 4px;
-
-  color: #f5c542;
-
-  text-transform: uppercase;
-
+  /* Cria uma sombra dupla no texto: uma escura para profundidade e uma dourada para o efeito "brilho" */
   text-shadow:
     0 2px 4px rgba(0, 0, 0, 0.8),
     0 0 15px rgba(245, 197, 66, 0.25);
 }
 
 /* =========================================================
-   MAIN
+   MAIN (Área principal de conteúdo)
    ========================================================= */
 
 main {
-  flex: 1;
+  flex: 1;                /* Faz com que esta área ocupe todo o espaço vertical restante do ecrã */
+  width: 100%;            /* Ocupa a largura total */
+  
+  display: flex;          /* Usa Flexbox para os elementos internos */
+  flex-direction: column; /* Organiza-os em coluna */
+  align-items: center;    /* Centra os elementos horizontalmente */
 
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 15px 20px 30px;
+  padding: 15px 20px 30px; /* Espaçamentos internos */
 }
 
 /* =========================================================
-   MESA
+   MESA (A mesa verde de Blackjack)
    ========================================================= */
 
 #game {
-  position: relative;
+  position: relative;     /* Permite o posicionamento absoluto de elementos dentro da mesa (como a linha branca interior) */
+  width: 100%;            /* Ocupa a largura total disponível */
+  max-width: 950px;       /* Mas não passa de 950px de largura em ecrãs grandes */
+  min-height: 570px;      /* Altura mínima para garantir que a mesa não fica esmagada */
 
-  width: 100%;
-  max-width: 950px;
-
-  min-height: 570px;
-
-  padding: 35px 40px;
-
-  text-align: center;
+  padding: 35px 40px;     /* Espaçamento interno da mesa */
+  text-align: center;     /* Centra o conteúdo (cartas e botões) */
 
   /*
-       Mesa de casino
-    */
+       Mesa de casino (Gradiente radial simulando o tapete verde iluminado ao centro)
+  */
   background: radial-gradient(
     ellipse at center,
     #087f4b 0%,
@@ -101,36 +93,34 @@ main {
   );
 
   /*
-       Moldura da mesa
-    */
+       Moldura da mesa (Borda grossa castanha simulando madeira)
+  */
   border: 12px solid #5a3517;
+  border-radius: 35px;    /* Arredonda os cantos da mesa */
 
-  border-radius: 35px;
-
+  /* Sombra externa pesada para criar profundidade e sombra interna para dar textura de borda alta */
   box-shadow:
     0 20px 45px rgba(0, 0, 0, 0.7),
     inset 0 0 35px rgba(0, 0, 0, 0.35);
 }
 
 /*
-   Linha interior da mesa
+   Linha interior da mesa (criada com um pseudo-elemento)
 */
-
 #game::before {
-  content: "";
+  content: "";            /* Necessário para o ::before aparecer na página */
+  position: absolute;     /* Posiciona-se livremente em relação ao #game */
 
-  position: absolute;
-
+  /* Define a distância das margens, criando o tamanho da linha */
   top: 18px;
   left: 18px;
   right: 18px;
   bottom: 18px;
 
-  border: 2px solid rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.25); /* Linha branca semi-transparente */
+  border-radius: 25px;    /* Acompanha o formato arredondado da mesa */
 
-  border-radius: 25px;
-
-  pointer-events: none;
+  pointer-events: none;   /* Garante que esta linha não bloqueia cliques do rato nos botões/cartas */
 }
 
 /* =========================================================
@@ -138,131 +128,82 @@ main {
    ========================================================= */
 
 #game h2 {
-  position: relative;
-  z-index: 2;
+  position: relative;     /* Para funcionar com o z-index */
+  z-index: 2;             /* Garante que o texto fica acima da linha decorativa da mesa */
 
-  margin: 10px 0 12px;
-
-  font-size: 1.5rem;
-
-  font-weight: bold;
-
-  text-transform: uppercase;
-
-  letter-spacing: 3px;
-
-  color: white;
-
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin: 10px 0 12px;    /* Espaçamento em cima e em baixo */
+  font-size: 1.5rem;      /* Tamanho da fonte */
+  font-weight: bold;      /* Texto em negrito */
+  text-transform: uppercase; /* Letras maiúsculas */
+  letter-spacing: 3px;    /* Espaço entre letras */
+  color: white;           /* Cor branca */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Sombra preta para destacar do verde */
 }
 
 /* =========================================================
    ÁREAS DAS CARTAS
    ========================================================= */
 
-/*
-   No HTML:
-
-   <p id="dealer"></p>
-   <p id="player"></p>
-
-   O JavaScript coloca DIV.card dentro destes elementos.
-*/
-
 #dealer,
 #player {
   position: relative;
-  z-index: 2;
+  z-index: 2;             /* Coloca a zona das cartas acima das decorações da mesa */
+  min-height: 145px;      /* Altura mínima para não encolher quando não há cartas */
+  margin: 0 0 20px;       /* Margem inferior */
 
-  min-height: 145px;
+  display: flex;          /* Usa Flexbox para organizar as cartas em linha */
+  justify-content: center; /* Centra as cartas horizontalmente */
+  align-items: center;    /* Centra as cartas verticalmente */
+  gap: 12px;              /* Espaço entre cada carta */
 
-  margin: 0 0 20px;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  gap: 12px;
-
-  /*
-       Retira o comportamento padrão do <p>
-    */
-  padding: 5px;
+  padding: 5px;           /* Pequeno preenchimento interno */
 }
 
 /* =========================================================
-   CARTAS
+   CARTAS (O estilo visual de cada carta gerada)
    ========================================================= */
 
 .card {
-  width: 90px;
-  height: 125px;
+  width: 90px;            /* Largura da carta */
+  height: 125px;          /* Altura da carta */
 
-  /*
-       Fundo branco da carta
-    */
-  background: #ffffff;
+  background: #ffffff;    /* Fundo branco */
+  color: #111111;         /* Cor do texto (valor e naipe) */
+  border: 2px solid #d1d5db; /* Borda cinzenta clara */
+  border-radius: 10px;    /* Cantos arredondados normais de cartas */
 
-  color: #111111;
-
-  border: 2px solid #d1d5db;
-
-  border-radius: 10px;
-
-  /*
-       Centralizar o valor da carta
-    */
+  /* Flexbox para centralizar perfeitamente o número e o naipe no meio da carta */
   display: flex;
-
   justify-content: center;
-
   align-items: center;
 
-  /*
-       Texto da carta
-    */
-  font-size: 2rem;
+  font-size: 2rem;        /* Tamanho grande para o número da carta */
+  font-weight: bold;      /* Fonte em negrito */
 
-  font-weight: bold;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Sombra para a carta parecer levantada da mesa */
 
-  /*
-       Sombra
-    */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-
-  /*
-       Animação
-    */
+  /* Animação suave para quando hover (passar o rato) ou mudar de estado */
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
 
-  /*
-       Impede que o texto fique selecionável
-    */
-  user-select: none;
+  user-select: none;      /* Impede que o utilizador selecione o texto da carta por acidente */
 }
 
 /*
-   Efeito quando passamos o rato
+   Efeito quando passamos o rato por cima de uma carta
 */
-
 .card:hover {
-  transform: translateY(-8px) rotate(-1deg);
-
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6);
+  transform: translateY(-8px) rotate(-1deg); /* Levanta ligeiramente a carta e inclina 1 grau para a esquerda */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6); /* Aumenta a sombra para simular a elevação */
 }
 
 /* =========================================================
-   CARTA ESCONDIDA
+   CARTA ESCONDIDA (A carta virada para baixo do Dealer)
    ========================================================= */
 
 .hidden-card {
-  /*
-       Fundo vermelho/escuro típico de carta de casino
-    */
+  /* Fundo vermelho às riscas diagonais para simular o padrão do verso de uma carta */
   background: repeating-linear-gradient(
     45deg,
     #8b1e2d,
@@ -271,15 +212,11 @@ main {
     #a52a3b 10px
   );
 
-  border: 3px solid white;
-
-  color: white;
-
+  border: 3px solid white; /* Borda branca mais grossa */
+  color: white;           
   font-size: 3rem;
 
-  /*
-       Dá aparência de verso de carta
-    */
+  /* Combina sombra exterior com sombras interiores para dar textura ao verso da carta */
   box-shadow:
     0 6px 12px rgba(0, 0, 0, 0.6),
     inset 0 0 0 4px #8b1e2d,
@@ -289,39 +226,33 @@ main {
 /*
    Hover da carta escondida
 */
-
 .hidden-card:hover {
-  transform: translateY(-8px) rotate(2deg);
+  transform: translateY(-8px) rotate(2deg); /* Levanta e inclina ligeiramente para a direita */
 }
 
 /* =========================================================
-   BOTÕES
+   BOTÕES (Estilos gerais para todos os botões na mesa)
    ========================================================= */
 
 #game button {
   position: relative;
-  z-index: 3;
+  z-index: 3;             /* Garante que os botões estão bem acima da mesa e clicáveis */
 
-  min-width: 135px;
+  min-width: 135px;       /* Largura mínima padrão */
+  margin: 8px;            /* Espaço exterior */
+  padding: 13px 25px;     /* Espaço interno para torná-los grandes e fáceis de clicar */
 
-  margin: 8px;
-
-  padding: 13px 25px;
-
-  border: none;
-
-  border-radius: 10px;
+  border: none;           /* Remove a borda padrão do browser */
+  border-radius: 10px;    /* Botões arredondados */
 
   font-size: 1rem;
-
   font-weight: bold;
-
   text-transform: uppercase;
-
   letter-spacing: 1px;
 
-  cursor: pointer;
+  cursor: pointer;        /* Muda o rato para o ícone da 'mãozinha' ao pairar */
 
+  /* Transição suave para todas as interações visuais (hover e clique) */
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -330,89 +261,67 @@ main {
 }
 
 /*
-   Hover geral
+   Hover geral (passar o rato em botões que NÃO estejam desativados)
 */
-
 #game button:hover:not(:disabled) {
-  transform: translateY(-3px);
-
-  filter: brightness(1.1);
-
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.45);
+  transform: translateY(-3px); /* Levanta o botão */
+  filter: brightness(1.1);     /* Torna a cor um pouco mais clara/brilhante */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.45); /* Aumenta a sombra */
 }
 
 /*
-   Click
+   Click (efeito visual de "pressionar" botões não desativados)
 */
-
 #game button:active:not(:disabled) {
-  transform: translateY(1px);
-
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  transform: translateY(1px); /* Move o botão ligeiramente para baixo, simulando o clique físico */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* Reduz a sombra (porque o botão está "encostado" à mesa) */
 }
 
 /* =========================================================
-   BOTÃO CARD
+   BOTÃO CARD (Botão de pedir nova carta)
    ========================================================= */
 
 #card {
-  background: #2563eb !important;
-
-  border: 2px solid #60a5fa !important;
-
-  color: white !important;
+  background: #2563eb !important; /* Cor de fundo azul (!important força sobreposição a regras do bootstrap) */
+  border: 2px solid #60a5fa !important; /* Borda azul clara */
+  color: white !important; /* Texto branco */
 }
 
 /* =========================================================
-   BOTÃO STAND
+   BOTÃO STAND (Botão de parar)
    ========================================================= */
 
 #stand {
-  background: #dc2626 !important;
-
-  border: 2px solid #f87171 !important;
-
+  background: #dc2626 !important; /* Cor de fundo vermelha */
+  border: 2px solid #f87171 !important; /* Borda vermelha clara */
   color: white !important;
 }
 
 /* =========================================================
-   BOTÃO NEW GAME
+   BOTÃO NEW GAME (Botão de novo jogo)
    ========================================================= */
 
 #new_game {
-  background: #16a34a !important;
-
-  border: 2px solid #4ade80 !important;
-
+  background: #16a34a !important; /* Cor de fundo verde */
+  border: 2px solid #4ade80 !important; /* Borda verde clara */
   color: white !important;
 }
 
 /* =========================================================
-   BOTÕES DESATIVADOS
+   BOTÕES DESATIVADOS (Quando não é a vez de usar um botão)
    ========================================================= */
 
 #game button:disabled {
-  opacity: 0.35;
-
-  cursor: not-allowed;
-
-  transform: none;
-
-  box-shadow: none;
-
-  filter: grayscale(0.4);
+  opacity: 0.35;          /* Torna-o semitransparente (esbatido) */
+  cursor: not-allowed;    /* Mostra o ícone de 'proibido' no rato */
+  transform: none;        /* Remove qualquer animação de transformação */
+  box-shadow: none;       /* Remove sombras */
+  filter: grayscale(0.4); /* Torna-o parcialmente preto e branco */
 }
 
 /* =========================================================
-   ÁREA DE STATUS
+   ÁREA DE STATUS (A faixa que mostra se o jogador ganhou ou perdeu)
    ========================================================= */
-
-/*
-   O HTML usa:
-   #game_status
-
-   O JavaScript deveria usar o mesmo ID.
-*/
 
 #game_status,
 #status_game {
@@ -420,371 +329,291 @@ main {
   z-index: 2;
 
   width: 100%;
-  max-width: 950px;
+  max-width: 950px;       /* Mantém a mesma largura da mesa */
+  min-height: 65px;       /* Altura mínima da barra de mensagem */
 
-  min-height: 65px;
-
-  margin-top: 20px;
-
+  margin-top: 20px;       /* Afasta a barra do botão da mesa */
   padding: 18px 25px;
 
-  background: linear-gradient(135deg, #1f2937, #111827);
-
-  border: 2px solid #f5c542;
-
-  border-radius: 14px;
+  background: linear-gradient(135deg, #1f2937, #111827); /* Fundo cinzento-escuro sofisticado */
+  border: 2px solid #f5c542; /* Borda fina amarela/dourada */
+  border-radius: 14px;    /* Arredondamento */
 
   text-align: center;
-
   font-size: 1.3rem;
-
   font-weight: bold;
-
-  color: #f5c542;
-
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  color: #f5c542;         /* Letras na cor amarela/dourada */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Sombra da barra */
 }
 
 /* =========================================================
-   DEBUG
+   DEBUG (Caixa para informação de depuração - dev mode)
    ========================================================= */
 
 #sec_debug {
   width: 100%;
   max-width: 950px;
-
   margin-top: 25px;
-
   padding: 15px 20px;
 
-  background: #020617;
-
-  border: 1px solid #374151;
-
+  background: #020617;    /* Fundo quase preto */
+  border: 1px solid #374151; /* Borda subtil */
   border-radius: 10px;
 
-  color: #9ca3af;
-
-  font-family: monospace;
-
+  color: #9ca3af;         /* Texto cinzento apagado */
+  font-family: monospace; /* Fonte estilo terminal de programação */
   font-size: 0.8rem;
-
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
 }
 
 #sec_debug h2 {
   margin-bottom: 8px;
-
   font-size: 0.9rem;
-
   color: #6b7280;
-
   letter-spacing: 2px;
-
   text-transform: uppercase;
 }
 
 #debug {
-  word-break: break-word;
-
+  word-break: break-word; /* Quebra as linhas compridas para não ultrapassarem a caixa */
   line-height: 1.5;
-
   overflow-wrap: anywhere;
 }
 
 /* =========================================================
-   FOOTER
+   FOOTER (Rodapé da página)
    ========================================================= */
 
 footer {
   width: 100%;
-
   padding: 15px;
-
   text-align: center;
-
-  color: #6b7280;
-
+  color: #6b7280;         /* Texto cinzento discreto */
   font-size: 0.8rem;
 }
 
 /* =========================================================
-   ANIMAÇÃO DAS CARTAS
+   ANIMAÇÃO DAS CARTAS (Keyframes)
    ========================================================= */
 
+/* Define a animação "dealCard" para a carta saltar e aparecer */
 @keyframes dealCard {
   from {
-    opacity: 0;
-
-    transform: translateY(-30px) scale(0.8);
+    opacity: 0;           /* Começa invisível */
+    transform: translateY(-30px) scale(0.8); /* Começa 30px acima e 20% mais pequena */
   }
 
   to {
-    opacity: 1;
-
-    transform: translateY(0) scale(1);
+    opacity: 1;           /* Fica totalmente visível */
+    transform: translateY(0) scale(1); /* Regressa ao tamanho e posição original */
   }
 }
 
 /*
-   Cada carta criada pelo JavaScript
-   aparece com animação.
+   Aplica a animação "dealCard" com duração de 0.35s a todas as .card criadas
 */
-
 .card {
   animation: dealCard 0.35s ease-out;
 }
 
 /* =========================================================
-   RESPONSIVE - TABLET
+   RESPONSIVE - TABLET (Ecrãs médios até 768px de largura)
    ========================================================= */
 
 @media (max-width: 768px) {
-  header {
-    padding: 20px 10px 10px;
-  }
+  header { padding: 20px 10px 10px; }
+  header h1 { font-size: 2.3rem; letter-spacing: 3px; } /* Reduz ligeiramente o título */
 
-  header h1 {
-    font-size: 2.3rem;
-
-    letter-spacing: 3px;
-  }
-
-  main {
-    padding: 10px;
-  }
+  main { padding: 10px; }
 
   #game {
     min-height: 500px;
-
     padding: 25px 20px;
-
-    border-width: 8px;
-
+    border-width: 8px;    /* A borda da mesa fica mais fina */
     border-radius: 25px;
   }
 
-  #game h2 {
-    font-size: 1.3rem;
-  }
+  #game h2 { font-size: 1.3rem; }
 
   #dealer,
-  #player {
-    min-height: 120px;
-
-    gap: 8px;
-  }
+  #player { min-height: 120px; gap: 8px; }
 
   .card {
-    width: 70px;
+    width: 70px;          /* Diminui o tamanho das cartas no tablet */
     height: 100px;
-
     font-size: 1.6rem;
   }
 
-  .hidden-card {
-    font-size: 2.3rem;
-  }
+  .hidden-card { font-size: 2.3rem; }
 
   #game button {
-    min-width: 115px;
-
+    min-width: 115px;     /* Reduz um pouco a largura dos botões */
     padding: 11px 18px;
   }
 }
 
 /* =========================================================
-   RESPONSIVE - TELEMÓVEL
+   RESPONSIVE - TELEMÓVEL (Ecrãs pequenos até 480px de largura)
    ========================================================= */
 
 @media (max-width: 480px) {
   header h1 {
-    font-size: 1.8rem;
-
+    font-size: 1.8rem;    /* Reduz bastante o tamanho do título para caber no telemóvel */
     letter-spacing: 2px;
-    /* Altera a estrutura para empilhar cartas e estatísticas na vertical */
+    
+    /* ATENÇÃO: As linhas abaixo (classes aninhadas dentro do header h1) só são válidas
+       em CSS Moderno (CSS Nesting) ou pré-processadores como SASS.
+       Elas redefinem a disposição das cartas e estatísticas para dispositivos móveis */
     .cards-wrapper {
-      flex-direction: column;
+      flex-direction: column;    /* Altera o layout para vertical (cartas por cima, pontuação por baixo) */
       justify-content: center;
-      gap: 10px; /* Reduz o espaço entre as cartas e a pontuação */
+      gap: 10px;                 /* Reduz o espaço entre cartas e a pontuação */
       min-height: auto;
     }
 
-    /* Permite que as cartas saltem para a linha de baixo se forem muitas */
     .cards-container {
-      flex-wrap: wrap;
+      flex-wrap: wrap;           /* Se o jogador pedir muitas cartas, elas mudam para a linha de baixo */
       justify-content: center;
     }
 
-    /* Centra o total e o símbolo */
     .stats-container {
-      justify-content: center;
+      justify-content: center;   /* Centra o bloco onde está o total e o ícone de V ou X */
     }
 
-    /* Reduz ligeiramente o tamanho da pontuação e do ícone para caberem melhor */
     .score-text {
-      font-size: 1.2rem;
+      font-size: 1.2rem;         /* Reduz o texto do "Total" */
     }
 
     .result-icon {
-      font-size: 2rem;
+      font-size: 2rem;           /* Reduz ligeiramente o ícone de check/cruz */
     }
   }
 
   #game {
     min-height: 450px;
-
     padding: 20px 12px;
-
-    border-width: 5px;
-
+    border-width: 5px;           /* Borda muito fina para ecrã de telemóvel */
     border-radius: 20px;
   }
 
   #game::before {
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-
+    top: 10px; left: 10px; right: 10px; bottom: 10px; /* Ajusta a linha branca interna */
     border-radius: 15px;
   }
 
-  #game h2 {
-    font-size: 1.1rem;
+  #game h2 { font-size: 1.1rem; letter-spacing: 2px; }
 
-    letter-spacing: 2px;
-  }
-
-  #dealer,
-  #player {
+  #dealer, #player {
     min-height: 95px;
-
     gap: 5px;
-
     margin-bottom: 15px;
   }
 
   .card {
-    width: 52px;
+    width: 52px;                 /* Cartas muito mais pequenas para caberem em ecrãs móveis */
     height: 76px;
-
     border-radius: 7px;
-
     font-size: 1.2rem;
   }
 
-  .hidden-card {
-    font-size: 1.7rem;
-  }
+  .hidden-card { font-size: 1.7rem; }
 
   #game button {
-    width: 90%;
-
-    margin: 5px auto;
-
-    display: block;
-
+    width: 90%;                  /* Faz os botões ocuparem quase toda a largura do telemóvel */
+    margin: 5px auto;            /* Centra os botões e cria espaço entre eles */
+    display: block;              /* Os botões ficam uns por cima dos outros (empilhados) */
     padding: 10px;
   }
 
-  #game_status,
-  #status_game {
-    font-size: 1rem;
+  #game_status, #status_game { font-size: 1rem; padding: 15px; }
 
-    padding: 15px;
-  }
-
-  #sec_debug {
-    font-size: 0.7rem;
-
-    padding: 10px;
-  }
+  #sec_debug { font-size: 0.7rem; padding: 10px; }
 }
 
-/* Coloca as cartas e a zona de estatísticas lado a lado */
+/* =========================================================
+   ELEMENTOS DE ESTATÍSTICA (Pontuação ao lado das cartas)
+   ========================================================= */
+
+/* Coloca as cartas e a zona de estatísticas lado a lado (em desktop) */
 .cards-wrapper {
   display: flex;
-  align-items: center; /* Centra tudo verticalmente */
-  gap: 30px; /* Espaço entre a última carta e o texto do total */
+  align-items: center;    /* Centra tudo verticalmente (Cartas vs Pontuação) */
+  gap: 30px;              /* Espaço entre a última carta jogada e o bloco do total */
   min-height: 120px;
 }
 
-/* Garante que as cartas ficam lado a lado entre si */
+/* Garante que as cartas ficam lado a lado entre si dentro da zona .cards-wrapper */
 .cards-container {
   display: flex;
   gap: 10px;
 }
 
-/* Agrupa o total e o ícone (V ou X) */
+/* Agrupa o texto com o total do jogador e o ícone de resultado (ex: V ou X) */
 .stats-container {
   display: flex;
   align-items: center;
-  gap: 15px; /* Espaço entre o "Total: 21" e o ícone "✔" */
+  gap: 15px;              /* Espaço entre o número e o ícone */
 }
 
-/* Estilo para o número da soma */
+/* Estilo para o número que mostra a soma atual da mão */
 .score-text {
   font-size: 1.5rem;
   font-weight: bold;
-  color: rgb(170, 221, 62); /* Ajuste para a cor que preferir */
+  color: rgb(170, 221, 62); /* Verde-amarelado que contrasta bem no fundo verde */
 }
 
-/* Estilo base para o ícone */
+/* Estilo base para o ícone que aparece quando o jogador vence/perde (✔ / ✘) */
 .result-icon {
   font-size: 2.5rem;
   font-weight: bold;
-  line-height: 1;
+  line-height: 1;         /* Remove altura de linha extra para o ícone não desalinhado */
 }
 
-/* Classes para adicionar via JavaScript dependendo do resultado */
+/* Classes de validação de Vitória/Derrota adicionadas via JavaScript */
 .icon-win {
-  color: #12b123; /* Verde para Vitória */
+  color: #12b123;         /* Verde para Vitória (Blackjack ou ganhou ao Dealer) */
 }
 
 .icon-lose {
-  color: #dc3545; /* Vermelho para Derrota (Bust/Perdeu) */
+  color: #dc3545;         /* Vermelho para Derrota (Rebentou/Bust ou perdeu para o Dealer) */
 }
 
+/* Classe aplicada às cartas de Copas (Hearts) ou Ouros (Diamonds) no JS */
 .card.red-suit {
-    color: #dc2626;
-  }
+    color: #dc2626;       /* Muda o texto da carta para vermelho (Ouros e Copas) */
+}
 
 /* =========================================================
-   CORREÇÃO PARA ECRÃS PEQUENOS (Tem de ser o último código)
+   CORREÇÃO PARA ECRÃS PEQUENOS (Tem de ser o último código para ter precedência)
    ========================================================= */
 @media (max-width: 768px) {
-  /* Empilha as cartas em cima e a pontuação em baixo */
+  /* Empilha as cartas em cima e a pontuação em baixo em ecrãs menores */
   .cards-wrapper {
-    flex-direction: column !important;
+    flex-direction: column !important; /* Força a disposição vertical sobrepondo o código original */
     justify-content: center !important;
     gap: 10px !important;
     width: 100% !important;
   }
 
-  /* Permite que as cartas desçam de linha se o jogador tirar muitas */
+  /* Permite que as cartas desçam de linha se o jogador tirar muitas (previne que fujam da mesa) */
   .cards-container {
     flex-wrap: wrap !important;
     justify-content: center !important;
     width: 100% !important;
   }
 
-  /* Centra perfeitamente a pontuação e os símbolos de vitória/derrota */
+  /* Centra perfeitamente a pontuação e os símbolos abaixo das cartas */
   .stats-container {
     justify-content: center !important;
     width: 100% !important;
     margin-top: 5px !important;
   }
 
-  /* Reduz os elementos para evitar esticar os limites da mesa */
-  .score-text {
-    font-size: 1.2rem !important;
-  }
+  /* Reduz os tamanhos de texto na área das pontuações */
+  .score-text { font-size: 1.2rem !important; }
+  .result-icon { font-size: 1.8rem !important; }
 
-  .result-icon {
-    font-size: 1.8rem !important;
-  }
-
+  /* Garante que os naipes vermelhos (Copas/Ouros) se mantêm vermelhos mesmo em mobile */
   .card.red-suit {
     color: #dc2626;
   }
