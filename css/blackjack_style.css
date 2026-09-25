@@ -746,6 +746,10 @@ footer {
   color: #dc3545; /* Vermelho para Derrota (Bust/Perdeu) */
 }
 
+.card.red-suit {
+    color: #dc2626;
+  }
+
 /* =========================================================
    CORREÇÃO PARA ECRÃS PEQUENOS (Tem de ser o último código)
    ========================================================= */
